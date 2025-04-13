@@ -1,0 +1,21 @@
+services:
+  proyectofinal:
+    build: proyectofinal
+    ports:
+      - "8080:8080"
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/MINERAIOT
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      BROKER_URL: tcp://botelmer:61616
+      BROKER_USER: admin
+      BROKER_PASSWORD: admin
+    restart: always
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: MINERAIOT
