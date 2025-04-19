@@ -1,5 +1,7 @@
 package io.apiDevelopment.grupo2.proyectoFinal.exception;
 
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -63,5 +65,36 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(value = { UnauthorizedException.class })
 	public ResponseEntity<String> handleUnauthorized(UnauthorizedException ex){
 		return new ResponseEntity<String>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
+	}
+	
+	/**
+	 * Maneja las excepciones de tipo {@link DataIntegrityViolationException}.
+	 * Esta excepción se lanza cuando se intenta realizar una operación que viola
+	 * una restricción de integridad de la base de datos, como una violación
+	 * de clave foránea o una restricción de unicidad.
+	 *
+	 * <p>Este método examina la causa subyacente de la excepción para determinar
+	 * el tipo específico de violación y devuelve una respuesta HTTP apropiada.
+	 *
+	 * @param ex La excepción {@code DataIntegrityViolationException} capturada.
+	 * @return Una respuesta {@code ResponseEntity} que indica el resultado del
+	 * manejo de la excepción. Puede ser un {@link HttpStatus#CONFLICT} (409)
+	 * si se detecta una violación de clave foránea o de unicidad, o
+	 * {@link HttpStatus#INTERNAL_SERVER_ERROR} (500) para otros errores
+	 * de integridad no manejados específicamente.
+	 */
+	@ExceptionHandler(value = { DataIntegrityViolationException.class })
+	public ResponseEntity<String> handleDataIntegrityViolation(DataIntegrityViolationException ex){
+		ConstraintViolationException constraintViolationException = (ConstraintViolationException) ex.getCause();
+		
+		if(constraintViolationException.getSQLState().equals("23503")) {
+			return new ResponseEntity<String>("No se puede eliminar el registro porque está siendo utilizado.", HttpStatus.CONFLICT);
+		}
+		
+		if(constraintViolationException.getSQLState().equals("23505")) {
+			return new ResponseEntity<String>("Conflicto: valor duplicado.", HttpStatus.CONFLICT);
+		}
+		
+		return new ResponseEntity<String>("Ha ocurido un error interno en el servidor, su solicitud no ha podido ser procesada.", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }
