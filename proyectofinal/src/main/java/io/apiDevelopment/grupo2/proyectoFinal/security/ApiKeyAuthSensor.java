@@ -47,7 +47,7 @@ public class ApiKeyAuthSensor {
      * @return un {@link Optional} conteniendo el {@link Authentication} generado si la clave es válida;
      *         o vacío si no se encuentra un sensor con dicha clave.
      */
-	public Optional<Authentication> extract(HttpServletRequest request){
+	public Optional<Authentication> getApiKey(HttpServletRequest request){
 		
 		String providedKey = request.getHeader("API-KEY");
 		

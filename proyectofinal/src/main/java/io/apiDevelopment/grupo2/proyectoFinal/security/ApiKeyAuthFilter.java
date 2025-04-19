@@ -62,12 +62,12 @@ public class ApiKeyAuthFilter extends OncePerRequestFilter{
 	
 		if(endpoint.equals("location") || endpoint.equals("sensor") ||
 		  (endpoint.equals("sensor_data") && request.getMethod().equals("GET"))) {			
-			apiKeyCompany.extract(request)
+			apiKeyCompany.getApiKey(request)
 			.ifPresent(SecurityContextHolder.getContext()::setAuthentication);
 		}
 		
 		if(endpoint.equals("sensor_data") && request.getMethod().equals("POST")) {
-			apiKeySensor.extract(request)
+			apiKeySensor.getApiKey(request)
 			.ifPresent(SecurityContextHolder.getContext()::setAuthentication);
 		}
 		

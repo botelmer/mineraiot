@@ -53,8 +53,8 @@ public class SensorController {
 	 * Si no hay sensores registrados, la lista estará vacía.
 	 */
 	@GetMapping("/")
-	public ResponseEntity<List<SensorDTO>> getAllSensors(){
-		return new ResponseEntity<List<SensorDTO>>(sensorService.getAllSensors(), HttpStatus.OK); 
+	public ResponseEntity<List<SensorDTO>> getAllSensor(){
+		return new ResponseEntity<List<SensorDTO>>(sensorService.getAllSensor(), HttpStatus.OK); 
 	}
 	
 	

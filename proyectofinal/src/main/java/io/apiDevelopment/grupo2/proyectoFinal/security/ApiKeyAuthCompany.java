@@ -49,7 +49,7 @@ public class ApiKeyAuthCompany {
      * @return un {@link Optional} conteniendo el objeto {@link Authentication} generado si la clave es válida;
      *         o vacío si no se encuentra una compañía con esa API Key.
      */
-	public Optional<Authentication> extract(HttpServletRequest request){
+	public Optional<Authentication> getApiKey(HttpServletRequest request){
 		String providedKey = request.getHeader("API-KEY");
 		
 		Optional<Company> apiKey = companyRepository.findByApiKey(providedKey);

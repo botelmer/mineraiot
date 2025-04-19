@@ -15,22 +15,12 @@ import io.apiDevelopment.grupo2.proyectoFinal.dto.SensorDTO;
 public interface SensorService {
 	
 	/**
-	 * Crea un nuevo sensor en el sistema.
-	 *
-	 * @param sensorDTO El objeto {@link SensorDTO} que contiene los datos del sensor a crear.
-	 * No debe ser nulo y debe contener información válida.
-	 * @return Un mensaje {@code String} indicando el resultado de la operación de creación.
-	 * Este mensaje podría incluir información sobre el éxito o el fallo de la creación.
-	 */
-	String createSensor(SensorDTO sensorDTO);
-	
-	/**
 	 * Obtiene todos los sensores registrados en el sistema para la compañía autenticada.
 	 *
 	 * @return Una lista de objetos {@link SensorDTO}, cada uno representando un sensor.
 	 * La lista estará vacía si no hay sensores registrados para la compañía.
 	 */
-	List<SensorDTO> getAllSensors();
+	List<SensorDTO> getAllSensor();
 	
 	/**
 	 * Obtiene un sensor específico por su ID, verificando que pertenezca a la compañía autenticada.
@@ -41,6 +31,16 @@ public interface SensorService {
 	 * se podría retornar {@code null} o lanzar una excepción, dependiendo de la implementación.
 	 */
 	SensorDTO getSensorById(Long id);
+	
+	/**
+	 * Crea un nuevo sensor en el sistema.
+	 *
+	 * @param sensorDTO El objeto {@link SensorDTO} que contiene los datos del sensor a crear.
+	 * No debe ser nulo y debe contener información válida.
+	 * @return Un mensaje {@code String} indicando el resultado de la operación de creación.
+	 * Este mensaje podría incluir información sobre el éxito o el fallo de la creación.
+	 */
+	String createSensor(SensorDTO sensorDTO);
 	
 	/**
 	 * Actualiza la información de un sensor existente, verificando que pertenezca a la compañía autenticada.

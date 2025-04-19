@@ -2,6 +2,7 @@ io.apiDevelopment.grupo2.proyectoFinal
 io.apiDevelopment.grupo2.proyectoFinal.controller
 io.apiDevelopment.grupo2.proyectoFinal.dto
 io.apiDevelopment.grupo2.proyectoFinal.exception
+io.apiDevelopment.grupo2.proyectoFinal.jms
 io.apiDevelopment.grupo2.proyectoFinal.model
 io.apiDevelopment.grupo2.proyectoFinal.repository
 io.apiDevelopment.grupo2.proyectoFinal.security

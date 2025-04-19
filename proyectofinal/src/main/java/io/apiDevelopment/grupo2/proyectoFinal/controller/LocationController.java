@@ -42,7 +42,7 @@ public class LocationController {
      *         y el código de estado HTTP 302 (FOUND).
      */
 	@GetMapping("/")
-	public ResponseEntity<List<LocationDTO>> getLocations(){
+	public ResponseEntity<List<LocationDTO>> getAllLocation(){
 		return new ResponseEntity<List<LocationDTO>>(locationService.getAllLocation(), HttpStatus.FOUND);
 	}
 	/**
@@ -78,7 +78,7 @@ public class LocationController {
      *         y el código de estado HTTP 200 (OK).
      */
 	@PutMapping("/{id}")
-	public ResponseEntity<LocationDTO> updateLocation(@RequestBody LocationDTO locationDTO, @PathVariable Long id){
+	public ResponseEntity<LocationDTO> updateLocation(@PathVariable Long id, @RequestBody LocationDTO locationDTO){
 		return new ResponseEntity<LocationDTO>(locationService.updateLocation(id, locationDTO), HttpStatus.OK);
 	}
 	

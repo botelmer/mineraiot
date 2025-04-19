@@ -41,6 +41,37 @@ public class SensorServiceImpl implements SensorService{
 	private final SensorRepository sensorRepository;
 	private final LocationRepository locationRepository;
 	
+	/**
+     * Obtiene todos los sensores asociados a la compañía del usuario autenticado.
+     * <p>
+     * Retorna una lista de {@link SensorDTO} que representan los sensores registrados bajo la compañía identificada por el API Key.
+     * </p>
+     *
+     * @return una lista de objetos {@link SensorDTO} representando los sensores asociados.
+     */
+	@Override
+	public List<SensorDTO> getAllSensor() {
+		String apiKey = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
+		List<Sensor> sensors = sensorRepository.findByLocationCompanyApiKey(apiKey);
+		return sensors.stream().map((sensor) -> new SensorDTO(sensor)).toList();
+	}
+
+    /**
+     * Obtiene un sensor por su ID.
+     * <p>
+     * Si el sensor no se encuentra o no está asociado a la compañía del usuario autenticado, se lanza una excepción {@link NotFoundException}.
+     * </p>
+     *
+     * @param id el ID del sensor a obtener.
+     * @return un objeto {@link SensorDTO} que representa el sensor con el ID especificado.
+     * @throws NotFoundException si el sensor no se encuentra o no está asociado a la compañía.
+     */
+	@Override
+	public SensorDTO getSensorById(Long id) {
+		Sensor sensor = getValidatedSensor(id);
+		return new SensorDTO(sensor);
+	}
+	
     /**
      * Crea un nuevo sensor asociado a una ubicación específica.
      * <p>
@@ -73,39 +104,6 @@ public class SensorServiceImpl implements SensorService{
 		sensorRepository.save(sensor);
 		
 		return "Sensor creado correctamente, la api key es: " + sensor.getApiKey();
-	}
-
-
-    /**
-     * Obtiene todos los sensores asociados a la compañía del usuario autenticado.
-     * <p>
-     * Retorna una lista de {@link SensorDTO} que representan los sensores registrados bajo la compañía identificada por el API Key.
-     * </p>
-     *
-     * @return una lista de objetos {@link SensorDTO} representando los sensores asociados.
-     */
-	@Override
-	public List<SensorDTO> getAllSensors() {
-		String apiKey = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-		List<Sensor> sensors = sensorRepository.findByLocationCompanyApiKey(apiKey);
-	
-		return sensors.stream().map((sensor) -> new SensorDTO(sensor)).toList();
-	}
-
-    /**
-     * Obtiene un sensor por su ID.
-     * <p>
-     * Si el sensor no se encuentra o no está asociado a la compañía del usuario autenticado, se lanza una excepción {@link NotFoundException}.
-     * </p>
-     *
-     * @param id el ID del sensor a obtener.
-     * @return un objeto {@link SensorDTO} que representa el sensor con el ID especificado.
-     * @throws NotFoundException si el sensor no se encuentra o no está asociado a la compañía.
-     */
-	@Override
-	public SensorDTO getSensorById(Long id) {
-		Sensor sensor = getValidatedSensor(id);
-		return new SensorDTO(sensor);
 	}
 
     /**
