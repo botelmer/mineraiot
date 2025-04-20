@@ -6,7 +6,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Component;
 
-import io.apiDevelopment.grupo2.proyectoFinal.exception.UnauthorizedException;
 import io.apiDevelopment.grupo2.proyectoFinal.model.Company;
 import io.apiDevelopment.grupo2.proyectoFinal.repository.CompanyRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -55,7 +54,7 @@ public class ApiKeyAuthCompany {
 		Optional<Company> apiKey = companyRepository.findByApiKey(providedKey);
 		
 		if(apiKey.isEmpty()) {
-			throw new UnauthorizedException("Api key no autorizada.");
+			return Optional.empty();
 		}
 		
 		return Optional.of(new ApiKeyAuthToken(apiKey.get().getApiKey(), AuthorityUtils.NO_AUTHORITIES));

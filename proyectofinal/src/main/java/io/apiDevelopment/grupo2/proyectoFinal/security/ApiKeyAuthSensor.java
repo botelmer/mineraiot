@@ -6,7 +6,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Component;
 
-import io.apiDevelopment.grupo2.proyectoFinal.exception.UnauthorizedException;
 import io.apiDevelopment.grupo2.proyectoFinal.model.Sensor;
 import io.apiDevelopment.grupo2.proyectoFinal.repository.SensorRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -54,7 +53,7 @@ public class ApiKeyAuthSensor {
 		Optional<Sensor> apiKey = sensorRepository.findByApiKey(providedKey);
 		
 		if(apiKey.isEmpty()) {
-			throw new UnauthorizedException("Api key no autorizada.");
+			return Optional.empty();
 		}
 		
 		return Optional.of(new ApiKeyAuthToken(apiKey.get().getApiKey(), AuthorityUtils.NO_AUTHORITIES));

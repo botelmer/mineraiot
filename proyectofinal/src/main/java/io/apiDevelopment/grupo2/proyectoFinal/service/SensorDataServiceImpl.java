@@ -95,7 +95,7 @@ public class SensorDataServiceImpl implements SensorDataService{
 		List<Integer> sensorIdList = stringToList(sensorIds);
 		
 		String apiKey = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
-		
+		System.out.println(apiKey);
 		Optional<Company> company = companyRepository.findByApiKey(apiKey);
 		
 		if(company.isEmpty()) {

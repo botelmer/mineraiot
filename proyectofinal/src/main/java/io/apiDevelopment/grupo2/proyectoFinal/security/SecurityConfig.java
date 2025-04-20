@@ -1,13 +1,17 @@
 package io.apiDevelopment.grupo2.proyectoFinal.security;
 
+import java.time.LocalDateTime;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -56,6 +60,14 @@ public class SecurityConfig {
 			.authorizeHttpRequests(httpRequest -> {
 				httpRequest.requestMatchers(HttpMethod.POST, "/api/v1/company/").permitAll();
 				httpRequest.requestMatchers("/api/**").authenticated();
+			})
+			.exceptionHandling(exceptionHandler -> {
+				exceptionHandler.accessDeniedHandler((request, response, accessDeniedException) -> {
+					response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+					response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+					String errorJson = String.format("{\"message\": \"Acceso denegado: No tienes permisos para acceder a este recurso.\", \"timestamp\": \"%s\"}", LocalDateTime.now());
+					response.getWriter().write(errorJson);
+				});
 			})
 			.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
 		
