@@ -89,7 +89,7 @@ public class SensorServiceImpl implements SensorService{
 		
 		String apiKey = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
 
-		Optional<Location> location = locationRepository.findByNameAndCompanyApiKey(sensorDTO.getLocationName(), apiKey);
+		Optional<Location> location = locationRepository.findByIdAndCompanyApiKey(sensorDTO.getLocationId(), apiKey);
 		
 		if(location.isEmpty()) {
 			throw new NotFoundException("Localización no encontrada.");

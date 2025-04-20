@@ -25,12 +25,12 @@ public class SensorDTO {
 		this.name = sensor.getName();
 		this.category = sensor.getCategory();
 		this.meta = sensor.getMeta();
-		this.locationName = sensor.getLocation().getName();
+		this.locationId = sensor.getLocation().getId();
 	}
 	
 	/**
-     * Nombre del sensor.
-     */
+	 * Nombre del sensor
+	 */
 	private String name;
 	
 	/**
@@ -45,7 +45,7 @@ public class SensorDTO {
 	private String meta;
 	
 	/**
-     * Nombre de la ubicación a la que pertenece este sensor.
+     * Id de la ubicación a la que pertenece este sensor.
      */
-	private String locationName;
+	private Long locationId;
 }

@@ -25,17 +25,7 @@ public interface LocationRepository extends JpaRepository<Location, Long>{
      */
 	Optional<Location> findByIdAndCompanyApiKey(Long id, String apiKey); 
 	
-	/**
-     * Busca un objeto {@link Location} en la base de datos por su nombre y la clave de API de la compañía a la que pertenece.
-     *
-     * @param name   El nombre de la ubicación a buscar.
-     * @param apiKey La clave de API de la compañía asociada a la ubicación.
-     * @return Un {@link Optional} que contendrá el objeto {@link Location} si se encuentra
-     * una ubicación con el nombre especificado y perteneciente a la compañía con la clave de API dada,
-     * o un {@link Optional#empty()} si no se encuentra ninguna ubicación que cumpla ambos criterios.
-     */
-	Optional<Location> findByNameAndCompanyApiKey(String name, String apiKey);
-	
+
 	/**
      * Busca todas las ubicaciones {@link Location} en la base de datos asociadas a una compañía específica mediante su clave de API.
      *
